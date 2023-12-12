@@ -1,26 +1,23 @@
 NAME	= libftprintf.a
 FILES	=	ft_printf.c \
-			ft_putchar.c \
-			ft_putstr.c \
-			ft_putnbr.c \
-			ft_printhexa.c \
-			ft_printpointer.c
+			ft_printf_utils.c
 OBJS	= ${FILES:%.c=%.o}
 CC		= gcc
 FLAGS	= -Wall -Werror -Wextra
 RM		= rm -f
 
-${NAME}:
-					${CC} -c ${FLAGS} ${FILES} -I ./
-					ar -rc ${NAME} ${OBJS}
-
 all:		${NAME}
 
+${NAME}:
+		${CC} -c ${FLAGS} ${FILES} -I ./
+		ar -rc ${NAME} ${OBJS}
+
+
 clean:
-					${RM} ${OBJS}
+		${RM} ${OBJS}
 
 fclean:		clean
-					${RM} ${NAME}
+		${RM} ${NAME}
 
 re:			fclean all
 

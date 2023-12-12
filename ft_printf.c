@@ -6,31 +6,34 @@
 /*   By: mguardia <mguardia@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 11:23:36 by mguardia          #+#    #+#             */
-/*   Updated: 2023/10/03 17:23:26 by mguardia         ###   ########.fr       */
+/*   Updated: 2023/12/12 17:05:57 by mguardia         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	format_printf(char c, va_list ap)
+static void	format_printf(char c, va_list ap, int *count)
 {
 	if (c == '%')
-		return (ft_putchar('%'));
+		*count += write(1, "%", 1);
 	else if (c == 'c')
-		return (ft_putchar(va_arg(ap, int)));
+		ft_putchar(va_arg(ap, int), count);
 	else if (c == 's')
-		return (ft_putstr(va_arg(ap, char *)));
+		ft_putstr(va_arg(ap, char *), count);
 	else if (c == 'p')
-		return (ft_printpointer(va_arg(ap, void *)));
+		ft_printpointer(va_arg(ap, void *), count);
 	else if (c == 'd' || c == 'i')
-		return (ft_putnbr(va_arg(ap, int)));
+		ft_putnbr_base((long long int)va_arg(ap, int), 10, \
+								count, "0123456789");
 	else if (c == 'u')
-		return (ft_putnbrunsigned(va_arg(ap, unsigned int)));
+		ft_putnbr_base((long long int)va_arg(ap, unsigned int), 10, \
+								count, "0123456789");
 	else if (c == 'x')
-		return (ft_printhexa(va_arg(ap, unsigned int), 0));
+		ft_putnbr_base(va_arg(ap, unsigned int), 16, \
+								count, "0123456789abcdef");
 	else if (c == 'X')
-		return (ft_printhexa(va_arg(ap, unsigned int), 1));
-	return (-1);
+		ft_putnbr_base(va_arg(ap, unsigned int), 16, \
+								count, "0123456789ABCDEF");
 }
 
 int	ft_printf(char const *str, ...)
@@ -45,10 +48,10 @@ int	ft_printf(char const *str, ...)
 		if (*str == '%')
 		{
 			str++;
-			count += format_printf(*str, ap);
+			format_printf(*str, ap, &count);
 		}
 		else
-			count += ft_putchar(*str);
+			count += write(1, &(*str), 1);
 		str++;
 	}
 	va_end(ap);
