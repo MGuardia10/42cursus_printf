@@ -2,6 +2,7 @@
 The ft_printf project aims to reproduce the behaviour of the C standard library's function `printf()`.
 
 ![C](https://img.shields.io/badge/C-a?style=for-the-badge&logo=C&color=grey)
+![Makefile](https://img.shields.io/badge/Makefile-a?style=for-the-badge&logo=monster&logoColor=orange&color=grey)
 
 You can see the subject [**HERE**](https://github.com/MGuardia10/42cursus/blob/main/subjects/en/printf_subject_en.pdf)
 
